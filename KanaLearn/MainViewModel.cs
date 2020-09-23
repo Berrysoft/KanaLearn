@@ -119,6 +119,7 @@ namespace KanaLearn
             mainTimer.Tick += (sender, e) => MainTimer_Tick();
             StartCommand = new Command(Start, () => !Running);
             PauseCommand = new Command(Pause, () => Running);
+            ConfirmCommand = new Command(Confirm);
             if (DesignerProperties.GetIsInDesignMode(new DependencyObject()))
             {
                 CurrentKana = "ふ";
@@ -154,12 +155,18 @@ namespace KanaLearn
             Running = false;
         }
 
+        public Command ConfirmCommand { get; }
+
         public void Confirm()
         {
             if (Running)
             {
                 Pause();
                 if (MainTimer_Tick()) Start();
+            }
+            else
+            {
+                Start();
             }
         }
 

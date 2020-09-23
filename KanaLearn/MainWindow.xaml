@@ -10,7 +10,7 @@
         <local:MainViewModel x:Name="Model"/>
     </Window.DataContext>
     <Window.InputBindings>
-        <KeyBinding Gesture="Alt+Enter" Command="{Binding StartCommand}"/>
+        <KeyBinding Gesture="Enter" Command="{Binding ConfirmCommand}"/>
     </Window.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
@@ -28,7 +28,7 @@
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
-            <TextBox x:Name="InputBox" Grid.Column="1" Margin="8" HorizontalContentAlignment="Center" IsEnabled="{Binding Running}" Text="{Binding Input,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" FontSize="30" KeyDown="InputBox_KeyDown"/>
+            <TextBox x:Name="InputBox" Grid.Column="1" Margin="8" HorizontalContentAlignment="Center" IsEnabled="{Binding Running}" Text="{Binding Input,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" FontSize="30"/>
             <TextBlock Grid.Column="2" Margin="8" Foreground="Red" Text="{Binding CorrectAnswer}" FontSize="30"/>
         </Grid>
         <Grid Grid.Row="2" Margin="4">
