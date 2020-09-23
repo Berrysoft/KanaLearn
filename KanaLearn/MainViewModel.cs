@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows;
 using System.Windows.Threading;
 using MvvmHelpers.Commands;
 
@@ -117,6 +118,12 @@ namespace KanaLearn
             mainTimer.Tick += MainTimer_Tick;
             StartCommand = new Command(Start, () => !Running);
             PauseCommand = new Command(Pause, () => Running);
+            if (DesignerProperties.GetIsInDesignMode(new DependencyObject()))
+            {
+                CurrentKana = "ふ";
+                Input = "fu";
+                CorrectAnswer = "hu";
+            }
         }
 
         public bool Running { get; set; }
