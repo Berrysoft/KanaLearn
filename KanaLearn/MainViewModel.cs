@@ -5,7 +5,6 @@ using System.Configuration;
 using System.Linq;
 using System.Windows;
 using System.Windows.Threading;
-using MvvmHelpers.Commands;
 
 namespace KanaLearn
 {
