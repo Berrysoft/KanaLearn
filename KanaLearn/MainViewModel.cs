@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Linq;
 using System.Windows;
 using System.Windows.Threading;
@@ -114,7 +115,7 @@ namespace KanaLearn
 
         public MainViewModel()
         {
-            mainTimer.Interval = TimeSpan.FromMilliseconds(3000);
+            mainTimer.Interval = TimeSpan.FromMilliseconds(int.Parse(ConfigurationManager.AppSettings["interval"] ?? "3000"));
             mainTimer.Tick += MainTimer_Tick;
             StartCommand = new Command(Start, () => !Running);
             PauseCommand = new Command(Pause, () => Running);
