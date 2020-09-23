@@ -20,12 +20,12 @@
         </Viewbox>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="4*"/>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
-            <TextBox x:Name="InputBox" Grid.Column="1" Margin="8" HorizontalContentAlignment="Center" IsEnabled="{Binding Running}" Text="{Binding Input,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" FontSize="30"/>
+            <TextBox x:Name="InputBox" Grid.Column="1" Margin="8" HorizontalContentAlignment="Center" IsEnabled="{Binding Running}" Text="{Binding Input,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" FontSize="30" KeyDown="InputBox_KeyDown"/>
             <TextBlock Grid.Column="2" Margin="8" Foreground="Red" Text="{Binding CorrectAnswer}" FontSize="30"/>
         </Grid>
         <Grid Grid.Row="2" Margin="4">

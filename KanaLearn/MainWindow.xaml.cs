@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Windows;
+using System.Windows.Input;
 
 namespace KanaLearn
 {
@@ -16,6 +17,14 @@ namespace KanaLearn
             if (e.PropertyName == "Running")
             {
                 InputBox.Focus();
+            }
+        }
+
+        private void InputBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                Model.Confirm();
             }
         }
     }

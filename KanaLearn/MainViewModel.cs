@@ -154,6 +154,15 @@ namespace KanaLearn
             Running = false;
         }
 
+        public void Confirm()
+        {
+            if (Running)
+                mainTimer.Stop();
+            MainTimer_Tick(null, EventArgs.Empty);
+            if (Running)
+                mainTimer.Start();
+        }
+
         public string? CurrentKana { get; set; }
 
         public string? Input { get; set; }
