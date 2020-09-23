@@ -116,7 +116,7 @@ namespace KanaLearn
         public MainViewModel()
         {
             mainTimer.Interval = TimeSpan.FromMilliseconds(int.Parse(ConfigurationManager.AppSettings["interval"] ?? "3000"));
-            mainTimer.Tick += MainTimer_Tick;
+            mainTimer.Tick += (sender, e) => MainTimer_Tick();
             StartCommand = new Command(Start, () => !Running);
             PauseCommand = new Command(Pause, () => Running);
             if (DesignerProperties.GetIsInDesignMode(new DependencyObject()))
@@ -141,7 +141,7 @@ namespace KanaLearn
         {
             if (kanas.Count == 0) InitializeKanas();
             if (CurrentKana == kanas.Last()) CurrentKana = null;
-            if (CurrentKana == null) MainTimer_Tick(null, EventArgs.Empty);
+            if (CurrentKana == null) MainTimer_Tick();
             mainTimer.Start();
             Running = true;
         }
@@ -157,10 +157,10 @@ namespace KanaLearn
         public void Confirm()
         {
             if (Running)
-                mainTimer.Stop();
-            MainTimer_Tick(null, EventArgs.Empty);
-            if (Running)
-                mainTimer.Start();
+            {
+                Pause();
+                if (MainTimer_Tick()) Start();
+            }
         }
 
         public string? CurrentKana { get; set; }
@@ -177,22 +177,24 @@ namespace KanaLearn
             kanas.AddRange(KanaMap.Keys.Random());
         }
 
-        private void MainTimer_Tick(object? sender, EventArgs e)
+        private bool MainTimer_Tick()
         {
             CorrectAnswer = null;
             if (CurrentKana != null) kanas.Remove(CurrentKana);
-            if (CurrentKana == null || KanaMap[CurrentKana] == Input)
+            bool res = CurrentKana == null || KanaMap[CurrentKana] == Input;
+            if (res)
             {
                 CurrentKana = kanas.FirstOrDefault();
             }
             else
             {
-                CorrectAnswer = KanaMap[CurrentKana];
-                kanas.Add(CurrentKana);
+                CorrectAnswer = KanaMap[CurrentKana!];
+                kanas.Add(CurrentKana!);
                 Pause();
             }
             Input = null;
             if (CurrentKana == null) Pause();
+            return res;
         }
     }
 

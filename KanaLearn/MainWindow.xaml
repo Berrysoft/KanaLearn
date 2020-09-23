@@ -9,6 +9,9 @@
     <Window.DataContext>
         <local:MainViewModel x:Name="Model"/>
     </Window.DataContext>
+    <Window.InputBindings>
+        <KeyBinding Gesture="Alt+Enter" Command="{Binding StartCommand}"/>
+    </Window.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
