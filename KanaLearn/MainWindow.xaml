@@ -38,8 +38,13 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="1" Margin="4" Command="{Binding StartCommand}">スタート</Button>
-            <Button Grid.Column="2" Margin="4" Command="{Binding PauseCommand}">一時停止</Button>
+            <TextBlock Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                第
+                <Run Text="{Binding CurrentWave}"/>
+                回
+            </TextBlock>
+            <Button Grid.Column="1" Margin="4" Command="{Binding StartCommand}">始める</Button>
+            <Button Grid.Column="2" Margin="4" Command="{Binding PauseCommand}">一時停止する</Button>
         </Grid>
     </Grid>
 </Window>

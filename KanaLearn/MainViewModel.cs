@@ -225,12 +225,15 @@ namespace KanaLearn
 
         public string? CorrectAnswer { get; set; }
 
+        public int CurrentWave { get; set; }
+
         private readonly List<string> kanas = new List<string>();
 
         private void InitializeKanas()
         {
             kanas.Clear();
             kanas.AddRange(KanaMap.Keys.Random());
+            CurrentWave++;
         }
 
         private bool MainTimer_Tick()
@@ -262,7 +265,7 @@ namespace KanaLearn
 
     static class RandomHelper
     {
-        public readonly static Random Generator = new Random();
+        public static readonly Random Generator = new Random();
 
         public static IEnumerable<T> Random<T>(this IEnumerable<T> source)
         {
