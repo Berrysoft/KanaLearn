@@ -190,7 +190,7 @@ namespace KanaLearn
         public void Start()
         {
             if (kanas.Count == 0) InitializeKanas();
-            if (CurrentKana == kanas.Last()) CurrentKana = null;
+            if (CurrentKana == kanas.Last().Kana) CurrentKana = null;
             if (CurrentKana == null) MainTimer_Tick();
             mainTimer.Start();
             Running = true;
@@ -227,23 +227,43 @@ namespace KanaLearn
 
         public int CurrentWave { get; set; }
 
-        private readonly List<string> kanas = new List<string>();
+        public int MistakeCount { get; set; }
+
+        struct KanaWithMistake
+        {
+            public string Kana;
+            public bool IsMistake;
+
+            public KanaWithMistake(string kana, bool isMistake)
+            {
+                Kana = kana;
+                IsMistake = isMistake;
+            }
+        }
+
+        private readonly List<KanaWithMistake> kanas = new List<KanaWithMistake>();
 
         private void InitializeKanas()
         {
             kanas.Clear();
-            kanas.AddRange(KanaMap.Keys.Random());
+            kanas.AddRange(KanaMap.Keys.Random().Select(k => new KanaWithMistake(k, false)));
             CurrentWave++;
         }
 
         private bool MainTimer_Tick()
         {
             CorrectAnswer = null;
-            if (CurrentKana != null) kanas.Remove(CurrentKana);
+            bool is_mistake = false;
+            if (CurrentKana != null)
+            {
+                is_mistake = kanas![0].IsMistake;
+                kanas!.RemoveAt(0);
+            }
             bool res = CurrentKana == null || KanaMap[CurrentKana].Contains(Input ?? string.Empty);
             if (res)
             {
-                CurrentKana = kanas.FirstOrDefault();
+                if (is_mistake) MistakeCount--;
+                CurrentKana = kanas!.FirstOrDefault().Kana;
             }
             else
             {
@@ -254,7 +274,8 @@ namespace KanaLearn
                     "/"
 #endif
                     , KanaMap[CurrentKana!]);
-                kanas.Add(CurrentKana!);
+                kanas!.Add(new KanaWithMistake(CurrentKana!, true));
+                if (!is_mistake) MistakeCount++;
                 Pause();
             }
             Input = null;
